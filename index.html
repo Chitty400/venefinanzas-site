@@ -141,9 +141,9 @@
       padding: 4px 12px; border-radius: 20px;
     }
 
-    /* ── SCREENSHOTS ── */
+    /* ── SCREENSHOTS (REFINED FOR DESKTOP) ── */
     .screenshots {
-      max-width: 100%; margin: 0 auto;
+      max-width: 1200px; margin: 0 auto;
       padding: 0 0 80px;
     }
     .screenshots-label {
@@ -152,16 +152,37 @@
       text-transform: uppercase; color: var(--dim);
       margin-bottom: 28px; padding: 0 24px;
     }
-    .screens-track {
-      display: flex; gap: 16px;
-      overflow-x: auto; scroll-snap-type: x mandatory;
-      padding: 0 24px 20px;
-      scrollbar-width: none;
+    .screens-container {
+      position: relative;
+      padding: 0 24px;
     }
-    .screens-track::-webkit-scrollbar { display: none; }
+    .screens-track {
+      display: flex; gap: 20px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding-bottom: 24px;
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: var(--dim) transparent; /* Firefox */
+    }
+
+    /* Custom Scrollbar (The "Mini Slider") */
+    .screens-track::-webkit-scrollbar {
+      height: 4px;
+    }
+    .screens-track::-webkit-scrollbar-track {
+      background: var(--border);
+      border-radius: 10px;
+      margin: 0 25%; /* Hace que parezca una mini-barra centrada en desktop */
+    }
+    .screens-track::-webkit-scrollbar-thumb {
+      background: var(--dim);
+      border-radius: 10px;
+    }
+    .screens-track::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
     
     .screen-card {
-      flex: 0 0 240px; scroll-snap-align: center;
+      flex: 0 0 260px; scroll-snap-align: center;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -171,8 +192,10 @@
       transition: opacity .5s ease, transform .5s ease;
       cursor: pointer;
     }
-    @media (max-width: 480px) {
-      .screen-card { flex: 0 0 210px; }
+    @media (max-width: 600px) {
+      .screens-track { gap: 12px; scrollbar-width: none; }
+      .screens-track::-webkit-scrollbar { display: none; }
+      .screen-card { flex: 0 0 220px; }
     }
     .screen-media {
       position: relative; width: 100%;
@@ -226,15 +249,17 @@
     .lightbox-nav {
       position: absolute; top: 50%; width: 100%;
       display: flex; justify-content: space-between;
-      transform: translateY(-50%); padding: 0 10px;
+      transform: translateY(-50%); padding: 0 40px;
       pointer-events: none;
     }
     .lightbox-nav button {
-      background: rgba(255,255,255,0.05); border: none;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
       color: white; width: 50px; height: 50px; border-radius: 50%;
       cursor: pointer; pointer-events: auto;
       display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
     }
+    .lightbox-nav button:hover { background: rgba(255,255,255,0.15); }
     @media (max-width: 768px) {
       .lightbox-nav { display: none; }
     }
@@ -322,56 +347,58 @@
 
 <section class="screenshots">
   <p class="screenshots-label">Capturas de pantalla</p>
-  <div class="screens-track" id="screensTrack">
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/1.webp" alt="Dashboard" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Dashboard</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/2.webp" alt="Agenda" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Agenda</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/3.webp" alt="Calculadora" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Calculadora</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/4.webp" alt="Factura real" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Factura real</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/5.webp" alt="OCR" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">OCR Facturas</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/6.webp" alt="Reportes" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Reportes</p>
-    </figure>
-    <figure class="screen-card">
-      <div class="screen-media">
-        <img data-src="assets/screenshots/7.webp" alt="Widgets" width="220" height="440"/>
-        <div class="skeleton"></div>
-      </div>
-      <p class="screen-label">Widgets</p>
-    </figure>
+  <div class="screens-container">
+    <div class="screens-track" id="screensTrack">
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/1.webp" alt="Dashboard" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Dashboard</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/2.webp" alt="Agenda" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Agenda</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/3.webp" alt="Calculadora" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Calculadora</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/4.webp" alt="Factura real" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Factura real</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/5.webp" alt="OCR" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">OCR Facturas</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/6.webp" alt="Reportes" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Reportes</p>
+      </figure>
+      <figure class="screen-card">
+        <div class="screen-media">
+          <img data-src="assets/screenshots/7.webp" alt="Widgets" width="260" height="520"/>
+          <div class="skeleton"></div>
+        </div>
+        <p class="screen-label">Widgets</p>
+      </figure>
+    </div>
   </div>
 </section>
 
