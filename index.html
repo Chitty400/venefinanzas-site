@@ -174,6 +174,7 @@
       opacity: 0;
       transform: translateY(20px);
       transition: opacity .5s ease, transform .5s ease;
+      cursor: pointer;
     }
     .screen-media {
       position: relative;
@@ -214,6 +215,48 @@
       color: var(--muted); text-align: center;
       letter-spacing: .3px;
       z-index: 3;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      display: none; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .lightbox.active { display: flex; }
+    .lightbox-content {
+      position: relative; max-width: 90%; max-height: 85vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox img {
+      max-width: 100%; max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: -50px; right: 0;
+      background: none; border: none; color: white;
+      font-size: 32px; cursor: pointer; padding: 10px;
+    }
+    .lightbox-nav {
+      position: absolute; top: 50%; width: 110%;
+      display: flex; justify-content: space-between;
+      transform: translateY(-50%); pointer-events: none;
+    }
+    .lightbox-nav button {
+      background: rgba(255,255,255,0.1); border: none;
+      color: white; width: 44px; height: 44px;
+      border-radius: 50%; cursor: pointer;
+      pointer-events: auto; transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-nav button:hover { background: rgba(255,255,255,0.2); }
+    @media (max-width: 600px) {
+      .lightbox-nav { display: none; }
+      .lightbox-close { top: -60px; right: 10px; }
     }
 
     /* ── FEATURES ── */
@@ -421,6 +464,21 @@
   </div>
 </section>
 
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="closeBtn">&times;</button>
+    <img src="" alt="Vista ampliada" id="lightboxImg">
+    <div class="lightbox-nav">
+      <button id="prevBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button id="nextBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-links">
     <a href="/privacidad">Política de Privacidad</a>
@@ -436,6 +494,7 @@
 </footer>
 
 <script>
+  // --- IMAGES OBSERVER ---
   const imgObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -455,6 +514,7 @@
 
   document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
 
+  // --- REVEAL ANIMATIONS ---
   const revealObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -466,6 +526,64 @@
   });
 
   document.querySelectorAll('.screen-card, .feat').forEach(el => revealObserver.observe(el));
+
+  // --- LIGHTBOX LOGIC ---
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('closeBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const screenCards = Array.from(document.querySelectorAll('.screen-card'));
+  const images = screenCards.map(card => card.querySelector('img').dataset.src);
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImg.src = images[currentIndex];
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % images.length;
+    lightboxImg.src = images[currentIndex];
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxImg.src = images[currentIndex];
+  }
+
+  screenCards.forEach((card, index) => {
+    card.addEventListener('click', () => openLightbox(index));
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+  prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+  });
+
+  // Basic swipe support
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+  lightbox.addEventListener('touchend', e => {
+    let touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) showNext();
+    if (touchEndX - touchStartX > 50) showPrev();
+  });
 </script>
 
 </body>
