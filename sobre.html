@@ -90,6 +90,43 @@
     .footer-copy { font-size: 12px; color: var(--dim); line-height: 1.8; }
     .footer-copy span { color: var(--muted); }
 
+    /* ACORDEON */
+    .acord { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .acord-trigger {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: rgba(255,255,255,0.03);
+      border: none; cursor: pointer; color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      transition: background .2s;
+    }
+    .acord-trigger:hover { background: var(--green-dim); }
+    .acord-trigger .left { display: flex; align-items: center; gap: 10px; }
+    .acord-trigger svg.icon { width: 16px; height: 16px; fill: var(--green); flex-shrink: 0; }
+    .acord-trigger svg.chevron { width: 14px; height: 14px; fill: var(--muted); transition: transform .25s; flex-shrink: 0; }
+    .acord.open .acord-trigger svg.chevron { transform: rotate(180deg); }
+    .acord-trigger.active, .acord.open .acord-trigger { background: var(--green-dim); color: var(--green); }
+    .acord-trigger.active svg.icon, .acord.open .acord-trigger svg.icon { fill: var(--green); }
+    .acord-body { max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s ease; padding: 0 16px; }
+    .acord.open .acord-body { max-height: 400px; padding: 12px 16px 14px; }
+    .acord-body .cafe-row { margin-bottom: 0; }
+
+    /* CAFE */
+    .cafe-group-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--green); margin-bottom: 8px; margin-top: 4px; padding-left: 2px; }
+    .cafe-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cafe-copy-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 12px; padding: 11px 14px;
+      color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: border-color .2s, background .2s, color .2s;
+      flex: 1; min-width: 130px;
+    }
+    .cafe-copy-btn.wide { flex: 1 1 100%; min-width: unset; margin-bottom: 2px; }
+    .cafe-copy-btn svg { width: 14px; height: 14px; fill: var(--green); flex-shrink: 0; }
+    .cafe-copy-btn:hover { border-color: rgba(77,216,138,0.3); background: rgba(77,216,138,0.06); color: var(--green); }
+    .cafe-copy-btn.copied { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+
     /* FADE IN */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     .hero, .card { animation: fadeUp .4s ease both; }
@@ -141,10 +178,6 @@
     <p>Todo lo que ves — diseño, arquitectura, rendimiento, soporte — lo hace una sola persona. Cada decisión viene de convicción y de escuchar a los usuarios, no de comité. Tengo una obsesión casi enfermiza por optimizar, pero dependo del feedback real para crecer.</p>
     <div class="stat-row">
       <div class="stat">
-        <div class="stat-value">23</div>
-        <div class="stat-label">años</div>
-      </div>
-      <div class="stat">
         <div class="stat-value">1</div>
         <div class="stat-label">desarrollador</div>
       </div>
@@ -182,6 +215,100 @@
       <span class="card-title">Sin publicidad, nunca</span>
     </div>
     <p>Esta app no tendrá anuncios. El modo <strong>PRO</strong> traerá herramientas avanzadas para necesidades específicas — sin comprometer la experiencia base que ya tienes.</p>
+  </div>
+
+  <!-- CAFE -->
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+      <span class="card-title">¿Me invitas un café? ☕</span>
+    </div>
+    <p>VeneFinanzas es gratuita y sin anuncios. Si la app te ha sido útil, cualquier contribución me ayuda a seguir desarrollándola.</p>
+    <div style="margin-top:14px; display:flex; flex-direction:column; gap:0;">
+
+      <!-- ACORDEON: PAGO MOVIL -->
+      <div class="acord" id="acord-pm">
+        <button class="acord-trigger" onclick="toggleAcord('acord-pm')">
+          <span class="left">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+            Pago Móvil
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <div class="acord-body">
+          <div class="cafe-row">
+            <button class="cafe-copy-btn" onclick="copiar('29864105', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              CI: 29.864.105
+            </button>
+            <button class="cafe-copy-btn" onclick="copiar('04147551115', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              Tlf: 0414-755-1115
+            </button>
+            <button class="cafe-copy-btn wide" onclick="copiar('Banco Venezuela', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              Banco Venezuela
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACORDEON: BINANCE PAY -->
+      <div class="acord" id="acord-bp">
+        <button class="acord-trigger" onclick="toggleAcord('acord-bp')">
+          <span class="left">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 11h2v2H3zm0-4h2v2H3zm4 0h2v2H7zm0 4h2v2H7zm-4 4h2v2H3zm4 0h2v2H7zM3 3h2v2H3zm4 0h2v2H7zm4 0h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2zm-4 4h2v2h-2zm4 0h2v2h-2zm0 4h2v2h-2zm-4 0h2v2h-2z"/></svg>
+            Binance Pay
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <div class="acord-body">
+          <div class="cafe-row" style="flex-direction:column;">
+            <a class="contact-item" href="https://app.binance.com/uni-qr/EspcjyfU" target="_blank" style="margin-top:0;">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--green);flex-shrink:0;"><path d="M3 11h2v2H3zm0-4h2v2H3zm4 0h2v2H7zm0 4h2v2H7zm-4 4h2v2H3zm4 0h2v2H7zM3 3h2v2H3zm4 0h2v2H7zm4 0h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2zm-4 4h2v2h-2zm4 0h2v2h-2zm0 4h2v2h-2zm-4 0h2v2h-2z"/></svg>
+              Abrir Binance Pay
+              <span style="margin-left:auto;color:var(--muted);font-size:13px;">QR →</span>
+            </a>
+            <button class="cafe-copy-btn wide" onclick="copiar('38235864', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              Binance ID: 38235864
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACORDEON: CRIPTO -->
+      <div class="acord" id="acord-cr">
+        <button class="acord-trigger" onclick="toggleAcord('acord-cr')">
+          <span class="left">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+            Direcciones cripto
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <div class="acord-body">
+          <div class="cafe-row" style="flex-direction:column;">
+            <button class="cafe-copy-btn wide" onclick="copiar('bc1qqfnxc67vrc7t8kj56g3ukqnlkpdmxh7ql78enc', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              BTC (Mainnet) · bc1qqfnxc67…enc
+            </button>
+            <button class="cafe-copy-btn wide" onclick="copiar('TQ1x8kagkNR8rdskbbB7zsNyeUvCt8sZRu', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              TRC20 (Tron) · TQ1x8kag…Ru
+            </button>
+            <button class="cafe-copy-btn wide" onclick="copiar('0x1de7FB967ABc6c83A418647294A61d80a2F08914', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              ERC20 / BEP20 / MATIC · 0x1de7…914
+            </button>
+            <button class="cafe-copy-btn wide" onclick="copiar('0x2e06f4dbcaa06c9118a6056d58766241377ef918359e5c6c3cfd07922269ef32', this)">
+              <svg viewBox="0 0 24 24"><path d="M11 17H7c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v2h2V5c0-2.21-1.79-4-4-4H7C4.79 1 3 2.79 3 5v10c0 2.21 1.79 4 4 4h4v-2zm9-8h-7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h7c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm0 12h-7V11h7v10z"/></svg>
+              APTOS · 0x2e06…ef32
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- CONTACTO -->
@@ -226,6 +353,26 @@
     <p style="margin-top:4px; font-size:11px; color:#333">No afiliada a ningún ente gubernamental venezolano.</p>
   </div>
 </footer>
+
+<script>
+  function toggleAcord(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    // Cierra todos
+    document.querySelectorAll('.acord').forEach(a => a.classList.remove('open'));
+    // Abre el clickeado si estaba cerrado
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function copiar(texto, btn) {
+    navigator.clipboard.writeText(texto).then(() => {
+      const original = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> ¡Copiado!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.innerHTML = original; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
 
 </body>
 </html>
