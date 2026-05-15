@@ -106,6 +106,10 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.5; transform: scale(.75); }
     }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
     .hero h1 {
       font-family: 'Kadwa', sans-serif;
       font-size: clamp(34px, 10vw, 62px);
@@ -393,6 +397,144 @@
       .nav-links a { font-size: 12px; padding: 5px 8px; }
       .hero { padding-top: 50px; }
     }
+
+    /* ── BETA REGISTRATION ── */
+    .beta-section {
+      max-width: 560px; margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .beta-card {
+      background: var(--card);
+      border: 1px solid rgba(77,216,138,0.3);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .beta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(77,216,138,0.6), transparent);
+    }
+    .beta-card::after {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(77,216,138,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .beta-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: 16px;
+    }
+    .beta-eyebrow .pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .beta-card h2 {
+      font-family: 'Kadwa', sans-serif;
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 700; letter-spacing: -0.8px;
+      margin-bottom: 10px; line-height: 1.2;
+    }
+    .beta-card > p {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.65; margin-bottom: 28px;
+    }
+    .beta-perks {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 28px;
+    }
+    .beta-perk {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--muted);
+    }
+    .beta-perk-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+    }
+    .beta-form { display: flex; flex-direction: column; gap: 12px; }
+    .beta-row { display: flex; gap: 10px; }
+    @media (max-width: 480px) { .beta-row { flex-direction: column; } }
+    .beta-field {
+      flex: 1; display: flex; flex-direction: column; gap: 6px;
+    }
+    .beta-field label {
+      font-size: 11px; font-weight: 600; letter-spacing: .5px;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .beta-field input,
+    .beta-field select,
+    .beta-field textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .beta-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23888'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    .beta-field select option { background: #1a1a1a; color: var(--white); }
+    .beta-field textarea { resize: none; }
+    .beta-field input:focus,
+    .beta-field select:focus,
+    .beta-field textarea:focus {
+      border-color: rgba(77,216,138,0.5);
+      background: rgba(77,216,138,0.04);
+    }
+    .beta-field input::placeholder,
+    .beta-field textarea::placeholder { color: var(--dim); }
+    .beta-submit {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--green); color: #0E0E0E;
+      font-family: 'Kadwa', sans-serif;
+      font-weight: 700; font-size: 15px;
+      padding: 15px 24px; border-radius: var(--radius-md);
+      border: none; cursor: pointer; width: 100%;
+      transition: opacity .2s, transform .15s;
+      margin-top: 4px;
+    }
+    .beta-submit:hover { opacity: .9; transform: translateY(-1px); }
+    .beta-submit:active { transform: translateY(0); }
+    .beta-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .beta-disclaimer {
+      font-size: 11px; color: var(--dim);
+      text-align: center; margin-top: 14px; line-height: 1.6;
+    }
+    /* Success state */
+    .beta-success {
+      display: none;
+      flex-direction: column; align-items: center;
+      text-align: center; padding: 20px 0;
+      gap: 14px;
+    }
+    .beta-success-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid rgba(77,216,138,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .beta-success-icon svg { width: 26px; height: 26px; fill: var(--green); }
+    .beta-success h3 {
+      font-family: 'Kadwa', sans-serif; font-size: 20px;
+      letter-spacing: -.5px;
+    }
+    .beta-success p { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 320px; }
   </style>
 </head>
 <body>
@@ -403,6 +545,7 @@
     VeneFinanzas<span class="dot">.</span>
   </a>
   <div class="nav-links">
+    <a href="#beta">Beta</a>
     <a href="/privacidad">Privacidad</a>
     <a href="/terminos">Términos</a>
     <a href="/sobre">Nosotros</a>
@@ -417,9 +560,9 @@
   </div>
   <h1>Tus finanzas,<br><em>solo tuyas</em></h1>
   <p>Control financiero personal para venezolanos.<br>Todo en tu dispositivo, cifrado y 100% privado.</p>
-  <a class="hero-cta" href="https://play.google.com/store/apps/details?id=com.chittysrespawner.venefinanzas" target="_blank" rel="noopener">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>
-    Google Play Store
+  <a class="hero-cta" href="#beta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    Solicitar acceso a la Beta
   </a>
   <div class="pills">
     <span class="pill">🔒 AES-256</span>
@@ -620,6 +763,58 @@
   </div>
 </div>
 
+<!-- BETA REGISTRATION -->
+<section class="beta-section" id="beta">
+  <div class="beta-card">
+    <div class="beta-eyebrow"><span class="pulse"></span>Acceso limitado</div>
+    <h2>Únete a la Beta Cerrada</h2>
+    <p>Estamos seleccionando un grupo reducido de usuarios para probar VeneFinanzas antes del lanzamiento oficial. Cupos limitados.</p>
+
+    <div class="beta-perks">
+      <div class="beta-perk"><span class="beta-perk-dot"></span>Acceso anticipado a todas las funciones</div>
+      <div class="beta-perk"><span class="beta-perk-dot"></span>Tu feedback dará forma al producto final</div>
+      <div class="beta-perk"><span class="beta-perk-dot"></span>Siempre gratis para los primeros beta testers</div>
+    </div>
+
+    <!-- Formulario: reemplaza YOUR_FORM_ID con el ID de Formspree -->
+    <form
+      class="beta-form"
+      id="betaForm"
+      action="https://formspree.io/f/xgodjpya"
+      method="POST"
+    >
+      <div class="beta-row">
+        <div class="beta-field">
+          <label for="beta-name">Nombre</label>
+          <input type="text" id="beta-name" name="nombre" placeholder="¿Cómo te llamas?" required autocomplete="off"/>
+        </div>
+        <div class="beta-field">
+          <label for="beta-email">Correo</label>
+          <input type="email" id="beta-email" name="email" placeholder="tu@correo.com" required autocomplete="off"/>
+        </div>
+      </div>
+      <div class="beta-field">
+        <label for="beta-reason">¿Por qué quieres acceder? <span style="color:var(--dim);font-weight:400">(opcional)</span></label>
+        <textarea id="beta-reason" name="razon" rows="3" placeholder="Cuéntanos brevemente…"></textarea>
+      </div>
+
+      <button type="submit" class="beta-submit" id="betaSubmit">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        Solicitar acceso
+      </button>
+      <p class="beta-disclaimer">Sin spam. Solo te contactaremos cuando tu cuenta esté aprobada.</p>
+    </form>
+
+    <div class="beta-success" id="betaSuccess">
+      <div class="beta-success-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <h3>¡Solicitud enviada!</h3>
+      <p>Te avisaremos a tu correo cuando tu acceso esté aprobado. Gracias por tu interés en VeneFinanzas.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-links">
     <a href="/privacidad">Privacidad</a>
@@ -705,6 +900,36 @@
     if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
     if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
   };
+  // --- BETA FORM ---
+  const betaForm = document.getElementById('betaForm');
+  const betaSuccess = document.getElementById('betaSuccess');
+  const betaSubmit = document.getElementById('betaSubmit');
+
+  if (betaForm) {
+    betaForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      betaSubmit.disabled = true;
+      betaSubmit.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" style="animation:spin 1s linear infinite"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg> Enviando…';
+
+      try {
+        const res = await fetch(betaForm.action, {
+          method: 'POST',
+          body: new FormData(betaForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          betaForm.style.display = 'none';
+          betaSuccess.style.display = 'flex';
+        } else {
+          throw new Error();
+        }
+      } catch {
+        betaSubmit.disabled = false;
+        betaSubmit.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Solicitar acceso';
+        alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+      }
+    });
+  }
 </script>
 
 </body>
