@@ -4,18 +4,27 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VeneFinanzas — Tus finanzas, solo tuyas</title>
+  <meta name="description" content="Control financiero personal para venezolanos. Sin registro, sin servidores, sin cuentas. Todo en tu dispositivo, cifrado y privado."/>
+  <meta property="og:title" content="VeneFinanzas — Tus finanzas, solo tuyas"/>
+  <meta property="og:description" content="Control financiero offline-first con AES-256, tasas BCV y OCR de facturas."/>
+  <meta property="og:type" content="website"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
+    /* ── TOKENS ── */
     :root {
-      --bg:       #0E0E0E;
-      --card:     #181818;
-      --border:   #242424;
-      --green:    #4DD88A;
-      --green-dim:rgba(77,216,138,0.12);
-      --white:    #FFFFFF;
-      --muted:    #888888;
-      --dim:      #444444;
+      --bg:        #0E0E0E;
+      --card:      #181818;
+      --border:    #242424;
+      --green:     #4DD88A;
+      --green-dim: rgba(77,216,138,0.12);
+      --white:     #FFFFFF;
+      --muted:     #888888;
+      --dim:       #444444;
+      --radius-lg: 20px;
+      --radius-md: 14px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -24,6 +33,7 @@
       background: var(--bg);
       color: var(--white);
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ── NAV ── */
@@ -39,7 +49,6 @@
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 18px;
       color: var(--white); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
     }
     .nav-logo .dot { color: var(--green); }
     .nav-links { display: flex; gap: 8px; }
@@ -53,8 +62,8 @@
 
     /* ── HERO ── */
     .hero {
-      max-width: 560px; margin: 0 auto;
-      padding: 100px 24px 80px;
+      max-width: 580px; margin: 0 auto;
+      padding: 100px 24px 70px;
       text-align: center;
     }
     .hero-badge {
@@ -67,28 +76,39 @@
       margin-bottom: 28px;
       text-transform: uppercase;
     }
+    .hero-badge .pulse {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(.75); }
+    }
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(36px, 8vw, 58px);
-      font-weight: 800; line-height: 1.08;
-      letter-spacing: -1.5px;
+      font-size: clamp(38px, 9vw, 62px);
+      font-weight: 800; line-height: 1.07;
+      letter-spacing: -2px;
       margin-bottom: 20px;
     }
     .hero h1 em { color: var(--green); font-style: normal; }
     .hero p {
       font-size: 16px; color: var(--muted);
-      line-height: 1.7; margin-bottom: 40px;
+      line-height: 1.75; margin-bottom: 40px;
+      max-width: 440px; margin-left: auto; margin-right: auto;
     }
     .hero-cta {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; align-items: center; gap: 9px;
       background: var(--green); color: #0E0E0E;
       font-family: 'Syne', sans-serif;
       font-weight: 700; font-size: 15px;
-      padding: 14px 28px; border-radius: 14px;
+      padding: 15px 30px; border-radius: var(--radius-md);
       text-decoration: none;
-      transition: opacity .2s, transform .2s;
+      transition: opacity .2s, transform .15s;
     }
-    .hero-cta:hover { opacity: .9; transform: translateY(-1px); }
+    .hero-cta:hover { opacity: .92; transform: translateY(-2px); }
+    .hero-cta svg { flex-shrink: 0; }
 
     /* ── PILLS ── */
     .pills {
@@ -99,6 +119,104 @@
       font-size: 12px; color: var(--muted);
       background: var(--card); border: 1px solid var(--border);
       padding: 5px 13px; border-radius: 20px;
+    }
+
+    /* ── SCREENSHOTS (lazy load) ── */
+    /*
+     * Sección de capturas de pantalla.
+     * Para añadir imágenes: coloca tus .webp/.png en /assets/screenshots/
+     * y añade elementos <figure class="screen-card"> en el HTML de abajo.
+     * El Intersection Observer se encarga del lazy load automáticamente.
+     */
+    .screenshots {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .screenshots-label {
+      text-align: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--dim);
+      margin-bottom: 32px;
+    }
+    .screens-track {
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .screens-track::-webkit-scrollbar { display: none; }
+    .screen-card {
+      flex: 0 0 220px; scroll-snap-align: start;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      /* Reveal animation — triggered by JS */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .screen-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Stagger delays */
+    .screen-card:nth-child(2) { transition-delay: .1s; }
+    .screen-card:nth-child(3) { transition-delay: .2s; }
+    .screen-card:nth-child(4) { transition-delay: .3s; }
+    .screen-card:nth-child(5) { transition-delay: .4s; }
+
+    /*
+     * SKELETON — visible mientras la imagen no cargó.
+     * Se elimina automáticamente cuando <img> dispara el evento load.
+     */
+    .screen-card .skeleton {
+      width: 100%;
+      aspect-ratio: 9/18;
+      background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .screen-card img {
+      display: block; width: 100%;
+      aspect-ratio: 9/18; object-fit: cover;
+      /* La imagen empieza oculta; se revela cuando carga */
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .screen-card img.loaded { opacity: 1; }
+    /* Quita el skeleton cuando la imagen está lista */
+    .screen-card img.loaded + .skeleton,
+    .screen-card .skeleton:has(+ img.loaded) { display: none; }
+
+    .screen-label {
+      padding: 10px 14px 14px;
+      font-size: 11px; font-weight: 600;
+      color: var(--muted); text-align: center;
+      letter-spacing: .3px;
+    }
+
+    /* Placeholder visual cuando no hay screenshots aún */
+    .screens-placeholder {
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .screens-placeholder code {
+      font-size: 12px;
+      background: #1a1a1a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--green);
     }
 
     /* ── FEATURES ── */
@@ -113,7 +231,14 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px; padding: 22px 20px;
+      /* Reveal on scroll — same pattern que screen-card */
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .45s ease, transform .45s ease;
     }
+    .feat.visible { opacity: 1; transform: none; }
+    .feat:nth-child(2) { transition-delay: .08s; }
+    .feat:nth-child(3) { transition-delay: .16s; }
+    .feat:nth-child(4) { transition-delay: .24s; }
     .feat-icon {
       width: 36px; height: 36px;
       background: var(--green-dim); border-radius: 10px;
@@ -125,13 +250,25 @@
       font-family: 'Syne', sans-serif;
       font-size: 14px; font-weight: 700; margin-bottom: 6px;
     }
-    .feat p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .feat p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ── SECTION DIVIDER ── */
+    .section-title {
+      max-width: 640px; margin: 0 auto;
+      padding: 0 24px 32px;
+      text-align: center;
+    }
+    .section-title h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 8px;
+    }
+    .section-title p { font-size: 14px; color: var(--muted); }
 
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 32px 24px;
-      text-align: center;
+      padding: 32px 24px; text-align: center;
     }
     .footer-links {
       display: flex; justify-content: center;
@@ -143,34 +280,39 @@
       transition: color .2s;
     }
     .footer-links a:hover { color: var(--white); }
-    .footer-copy {
-      font-size: 12px; color: var(--dim); line-height: 1.8;
-    }
+    .footer-copy { font-size: 12px; color: var(--dim); line-height: 1.8; }
     .footer-copy span { color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 14px 18px; }
+      .nav-links a { padding: 5px 10px; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">VeneFinanzas<span class="dot">.</span></a>
+  <a class="nav-logo" href="/">VeneFinanzas<span class="dot">.</span></a>
   <div class="nav-links">
-    <a href="privacidad.html">Privacidad</a>
-    <a href="terminos.html">Términos</a>
-    <a href="eliminar.html">Eliminar datos</a>
+    <a href="/privacidad">Privacidad</a>
+    <a href="/terminos">Términos</a>
+    <a href="/eliminar">Eliminar datos</a>
   </div>
 </nav>
 
+<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-badge">
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <circle cx="5" cy="5" r="4" fill="#4DD88A"/>
-    </svg>
+    <span class="pulse"></span>
     Beta pública · v1.1.6
   </div>
   <h1>Tus finanzas,<br><em>solo tuyas</em></h1>
   <p>Control financiero personal para venezolanos. Sin registro, sin servidores, sin cuentas. Todo en tu dispositivo, cifrado y privado.</p>
-  <a class="hero-cta" href="https://play.google.com/store/apps/details?id=com.chittysrespawner.venefinanzas" target="_blank">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>
+  <a class="hero-cta" href="https://play.google.com/store/apps/details?id=com.chittysrespawner.venefinanzas" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/>
+    </svg>
     Descargar en Google Play
   </a>
   <div class="pills">
@@ -181,6 +323,82 @@
     <span class="pill">📷 OCR de facturas</span>
   </div>
 </section>
+
+<!-- ── SCREENSHOTS CON LAZY LOAD ── -->
+<!--
+  INSTRUCCIONES para agregar capturas de pantalla:
+  1. Coloca tus imágenes en /assets/screenshots/ (ej: dashboard.webp, agenda.webp).
+  2. Descomenta los <figure class="screen-card"> de abajo y ajusta src y la etiqueta.
+  3. Elimina el bloque .screens-placeholder cuando tengas imágenes reales.
+  El lazy load y la animación de entrada funcionan automáticamente vía JS.
+-->
+<section class="screenshots">
+  <p class="screenshots-label">Capturas de pantalla</p>
+  <div class="screens-track" id="screensTrack">
+
+    <!-- PLACEHOLDER — eliminar cuando agregues imágenes reales -->
+    <div class="screens-placeholder" style="width:100%;flex-shrink:0">
+      Aquí aparecerán las capturas de pantalla.<br>
+      Coloca tus imágenes en <code>/assets/screenshots/</code><br>
+      y descomenta los bloques <code>&lt;figure&gt;</code> en el HTML.
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════
+    TEMPLATE DE CAPTURA — copiar y pegar por cada pantalla
+    ═══════════════════════════════════════════════
+
+    <figure class="screen-card">
+      <img
+        data-src="/assets/screenshots/NOMBRE-PANTALLA.webp"
+        alt="Descripción accesible de la pantalla"
+        width="220"
+        height="440"
+      />
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Nombre de la vista</p>
+    </figure>
+
+    Ejemplos listos para descomentar:
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/dashboard.webp" alt="Panel principal de VeneFinanzas" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Dashboard</p>
+    </figure>
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/agenda.webp" alt="Agenda de transacciones" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Agenda</p>
+    </figure>
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/tasas.webp" alt="Pantalla de tasas BCV y paralelo" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Tasas BCV</p>
+    </figure>
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/ocr.webp" alt="Escáner de facturas con OCR" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">OCR Facturas</p>
+    </figure>
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/ajustes.webp" alt="Pantalla de ajustes y seguridad" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Ajustes</p>
+    </figure>
+    -->
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<div class="section-title">
+  <h2>Diseñada para la realidad venezolana</h2>
+  <p>Funciona sin internet, entiende el bolívar y protege tu información.</p>
+</div>
 
 <section class="features">
   <div class="feat">
@@ -215,17 +433,59 @@
 
 <footer>
   <div class="footer-links">
-    <a href="privacidad.html">Política de Privacidad</a>
-    <a href="terminos.html">Términos y Condiciones</a>
-    <a href="eliminar.html">Eliminar mis datos</a>
+    <a href="/privacidad">Política de Privacidad</a>
+    <a href="/terminos">Términos y Condiciones</a>
+    <a href="/eliminar">Eliminar mis datos</a>
     <a href="mailto:venefinanzasapp@gmail.com">Contacto</a>
   </div>
   <div class="footer-copy">
     <p>VeneFinanzas · 2026</p>
     <p>Design & Development by <span>Chitty</span> · Mérida, Venezuela</p>
-    <p style="margin-top:4px; font-size:11px; color: #333">No afiliada a ningún ente gubernamental venezolano.</p>
+    <p style="margin-top:4px; font-size:11px; color:#333">No afiliada a ningún ente gubernamental venezolano.</p>
   </div>
 </footer>
+
+<script>
+  /* ════════════════════════════════════════════════
+     LAZY LOAD — Intersection Observer
+     Maneja:
+       1. Imágenes de screenshots (data-src → src)
+       2. Animación de entrada para .screen-card y .feat
+  ════════════════════════════════════════════════ */
+
+  // ── 1. Lazy load de imágenes ──
+  const imgObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const img = entry.target;
+      const src = img.dataset.src;
+      if (!src) return;
+
+      img.src = src;
+      img.addEventListener('load',  () => img.classList.add('loaded'), { once: true });
+      img.addEventListener('error', () => img.classList.add('loaded'), { once: true }); // evita skeleton eterno
+      obs.unobserve(img);
+    });
+  }, {
+    rootMargin: '200px 0px', // pre-carga 200px antes de entrar al viewport
+    threshold: 0
+  });
+
+  document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
+
+  // ── 2. Animación de entrada (reveal on scroll) ──
+  const revealObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.12
+  });
+
+  document.querySelectorAll('.screen-card, .feat').forEach(el => revealObserver.observe(el));
+</script>
 
 </body>
 </html>
