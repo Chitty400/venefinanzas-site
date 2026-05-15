@@ -11,7 +11,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--white); min-height: 100vh; }
     nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; background: rgba(14,14,14,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Kadwa', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); text-decoration: none; }
+    .nav-logo { display:flex; align-items:center; gap:9px; font-family: 'Kadwa', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); text-decoration: none; }
     .nav-logo .dot { color: var(--green); }
     .nav-links { display: flex; gap: 8px; }
     .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 20px; transition: color .2s, background .2s; }
@@ -60,7 +60,7 @@
 </head>
 <body>
 <nav>
-  <a class="nav-logo" href="/">VeneFinanzas<span class="dot">.</span></a>
+  <a class="nav-logo" href="/"><img src="/assets/logo.webp" alt="" width="26" height="26" style="border-radius:6px;object-fit:cover;flex-shrink:0"/>VeneFinanzas<span class="dot">.</span></a>
   <div class="nav-links">
     <a href="/privacidad">Privacidad</a>
     <a href="/terminos">Términos</a>
