@@ -56,12 +56,52 @@
     .footer-links a:hover { color: var(--white); }
     .footer-copy { font-size: 12px; color: var(--dim); line-height: 1.8; }
     .footer-copy span { color: var(--muted); }
+
+    /* ── NAV MOBILE ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center;
+      gap: 5px; width: 36px; height: 36px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; cursor: pointer; padding: 8px;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block; height: 1.5px; border-radius: 2px;
+      background: var(--muted);
+      transition: transform .25s ease, opacity .2s ease, width .2s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--white); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--white); }
+
+    @media (max-width: 600px) {
+      nav { padding: 12px 16px; align-items: center; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 2px;
+        background: rgba(14,14,14,0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px 14px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 14px; padding: 10px 14px; border-radius: 10px; color: var(--muted); }
+      .nav-links a:hover { color: var(--white); background: var(--card); }
+      .nav-links a.active { color: var(--white); }
+    }
   </style>
 </head>
 <body>
 <nav>
   <a class="nav-logo" href="/"><img src="/assets/logo.webp" alt="" width="26" height="26" style="border-radius:6px;object-fit:cover;flex-shrink:0"/>VeneFinanzas<span class="dot">.</span></a>
-  <div class="nav-links">
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
     <a href="/privacidad" class="active">Privacidad</a>
     <a href="/terminos">Términos</a>
     <a href="/eliminar">Eliminar datos</a>
@@ -175,5 +215,25 @@
     <p style="margin-top:4px; font-size:11px; color:#333">No afiliada a ningún ente gubernamental venezolano.</p>
   </div>
 </footer>
+
+<script>
+  // --- NAV HAMBURGER ---
+  const navHamburger = document.getElementById('navHamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (navHamburger) {
+    navHamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navHamburger.classList.toggle('open', open);
+      navHamburger.setAttribute('aria-expanded', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navHamburger.classList.remove('open');
+        navHamburger.setAttribute('aria-expanded', false);
+      });
+    });
+  }
+</script>
 </body>
 </html>
