@@ -348,6 +348,33 @@
     }
     .section-title p { font-size: 14px; color: var(--muted); }
 
+    /* ── FILOSOFÍA ── */
+    .filosofia {
+      max-width: 640px; margin: 0 auto;
+      padding: 0 24px 80px;
+      text-align: center;
+    }
+    .filosofia-inner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 0;
+    }
+    .filosofia-eyebrow {
+      font-family: 'Kadwa', sans-serif;
+      font-size: clamp(22px, 5vw, 32px);
+      font-weight: 700; letter-spacing: -1px;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .filosofia-text {
+      font-size: 15px;
+      color: var(--white);
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
     /* ── FOOTER ── */
     footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
     .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 24px; }
@@ -506,20 +533,10 @@
       <p>Tasas BCV y Binance P2P en tiempo real. Liquidez por divisa, gráficas por Día, Semana o Mes y transacciones frecuentes.</p>
     </div>
 
-    <!-- Calculadora — ícono minimalista verde -->
+    <!-- Calculadora — imagen local filtrada a verde -->
     <div class="feat">
       <div class="feat-icon">
-        <!-- Calculadora minimalista: cuerpo + pantalla + botones en cuadrícula -->
-        <svg class="icon-stroke" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="4" y="2" width="16" height="20" rx="2"/>
-          <rect x="7" y="5" width="10" height="4" rx="1"/>
-          <circle cx="8" cy="14" r="0.8" stroke-width="0"/>
-          <circle cx="12" cy="14" r="0.8" stroke-width="0"/>
-          <circle cx="16" cy="14" r="0.8" stroke-width="0"/>
-          <circle cx="8" cy="18" r="0.8" stroke-width="0"/>
-          <circle cx="12" cy="18" r="0.8" stroke-width="0"/>
-          <rect x="14.2" y="16.2" width="3.6" height="3.6" rx="0.8"/>
-        </svg>
+        <img src="assets/calculadora.webp" alt="" width="20" height="20" style="filter: invert(1) sepia(1) saturate(3) hue-rotate(90deg) brightness(1.1); width:20px; height:20px; object-fit:contain;"/>
       </div>
       <h3>Calculadora</h3>
       <p>Conversión instantánea a BCV y USDT. Comparte por WhatsApp, registra directo en Agenda. Historial de 50 cálculos.</p>
@@ -581,6 +598,13 @@
   </div>
 
 </div>
+
+<section class="filosofia">
+  <div class="filosofia-inner">
+    <p class="filosofia-eyebrow">Filosofía</p>
+    <p class="filosofia-text">Offline-first y privacy-first. Todo lo disponible hoy será siempre gratuito, sin límite de transacciones y sin pedirte nada. El futuro modo PRO marcará una diferencia real sin recortar la experiencia gratuita.</p>
+  </div>
+</section>
 
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="closeBtn">&times;</button>
