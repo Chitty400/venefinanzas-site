@@ -143,12 +143,6 @@
     }
 
     /* ── SCREENSHOTS (lazy load) ── */
-    /*
-     * Sección de capturas de pantalla.
-     * Para añadir imágenes: coloca tus .webp/.png en /assets/screenshots/
-     * y añade elementos <figure class="screen-card"> en el HTML de abajo.
-     * El Intersection Observer se encarga del lazy load automáticamente.
-     */
     .screenshots {
       max-width: 900px; margin: 0 auto;
       padding: 0 24px 80px;
@@ -173,7 +167,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      /* Reveal animation — triggered by JS */
       opacity: 0;
       transform: translateY(20px);
       transition: opacity .5s ease, transform .5s ease;
@@ -182,16 +175,11 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Stagger delays */
     .screen-card:nth-child(2) { transition-delay: .1s; }
     .screen-card:nth-child(3) { transition-delay: .2s; }
     .screen-card:nth-child(4) { transition-delay: .3s; }
     .screen-card:nth-child(5) { transition-delay: .4s; }
 
-    /*
-     * SKELETON — visible mientras la imagen no cargó.
-     * Se elimina automáticamente cuando <img> dispara el evento load.
-     */
     .screen-card .skeleton {
       width: 100%;
       aspect-ratio: 9/18;
@@ -206,38 +194,17 @@
     .screen-card img {
       display: block; width: 100%;
       aspect-ratio: 9/18; object-fit: cover;
-      /* La imagen empieza oculta; se revela cuando carga */
       opacity: 0;
       transition: opacity .4s ease;
     }
     .screen-card img.loaded { opacity: 1; }
-    /* Quita el skeleton cuando la imagen está lista */
-    .screen-card img.loaded + .skeleton,
-    .screen-card .skeleton:has(+ img.loaded) { display: none; }
+    .screen-card img.loaded + .skeleton { display: none; }
 
     .screen-label {
       padding: 10px 14px 14px;
       font-size: 11px; font-weight: 600;
       color: var(--muted); text-align: center;
       letter-spacing: .3px;
-    }
-
-    /* Placeholder visual cuando no hay screenshots aún */
-    .screens-placeholder {
-      border: 1px dashed var(--border);
-      border-radius: var(--radius-lg);
-      padding: 48px 24px;
-      text-align: center;
-      color: var(--dim);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-    .screens-placeholder code {
-      font-size: 12px;
-      background: #1a1a1a;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--green);
     }
 
     /* ── FEATURES ── */
@@ -252,7 +219,6 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px; padding: 22px 20px;
-      /* Reveal on scroll — same pattern que screen-card */
       opacity: 0; transform: translateY(16px);
       transition: opacity .45s ease, transform .45s ease;
     }
@@ -304,7 +270,6 @@
     .footer-copy { font-size: 12px; color: var(--dim); line-height: 1.8; }
     .footer-copy span { color: var(--muted); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       nav { padding: 14px 18px; }
       .nav-links a { padding: 5px 10px; font-size: 12px; }
@@ -325,7 +290,6 @@
   </div>
 </nav>
 
-<!-- ── HERO ── -->
 <section class="hero">
   <img class="hero-logo" src="/assets/logo.webp" alt="VeneFinanzas" width="88" height="88"/>
   <div class="hero-badge">
@@ -349,45 +313,12 @@
   </div>
 </section>
 
-<!-- ── SCREENSHOTS CON LAZY LOAD ── -->
-<!--
-  INSTRUCCIONES para agregar capturas de pantalla:
-  1. Coloca tus imágenes en /assets/screenshots/ (ej: dashboard.webp, agenda.webp).
-  2. Descomenta los <figure class="screen-card"> de abajo y ajusta src y la etiqueta.
-  3. Elimina el bloque .screens-placeholder cuando tengas imágenes reales.
-  El lazy load y la animación de entrada funcionan automáticamente vía JS.
--->
 <section class="screenshots">
   <p class="screenshots-label">Capturas de pantalla</p>
   <div class="screens-track" id="screensTrack">
-
-    <!-- PLACEHOLDER — eliminar cuando agregues imágenes reales -->
-    <div class="screens-placeholder" style="width:100%;flex-shrink:0">
-      Aquí aparecerán las capturas de pantalla.<br>
-      Coloca tus imágenes en <code>/assets/screenshots/</code><br>
-      y descomenta los bloques <code>&lt;figure&gt;</code> en el HTML.
-    </div>
-
-    <!--
-    ═══════════════════════════════════════════════
-    TEMPLATE DE CAPTURA — copiar y pegar por cada pantalla
-    ═══════════════════════════════════════════════
-
+    
     <figure class="screen-card">
-      <img
-        data-src="/assets/screenshots/NOMBRE-PANTALLA.webp"
-        alt="Descripción accesible de la pantalla"
-        width="220"
-        height="440"
-      />
-      <div class="skeleton" aria-hidden="true"></div>
-      <p class="screen-label">Nombre de la vista</p>
-    </figure>
-
-    Ejemplos listos para descomentar:
-
-    <figure class="screen-card">
-      <img data-src="/assets/screenshots/dashboard.webp" alt="Panel principal de VeneFinanzas" width="220" height="440"/>
+      <img data-src="/assets/screenshots/dashboard.webp" alt="Dashboard VeneFinanzas" width="220" height="440"/>
       <div class="skeleton" aria-hidden="true"></div>
       <p class="screen-label">Dashboard</p>
     </figure>
@@ -399,9 +330,9 @@
     </figure>
 
     <figure class="screen-card">
-      <img data-src="/assets/screenshots/tasas.webp" alt="Pantalla de tasas BCV y paralelo" width="220" height="440"/>
+      <img data-src="/assets/screenshots/calculadora.webp" alt="Calculadora de Guerra" width="220" height="440"/>
       <div class="skeleton" aria-hidden="true"></div>
-      <p class="screen-label">Tasas BCV</p>
+      <p class="screen-label">Calculadora</p>
     </figure>
 
     <figure class="screen-card">
@@ -411,15 +342,20 @@
     </figure>
 
     <figure class="screen-card">
-      <img data-src="/assets/screenshots/ajustes.webp" alt="Pantalla de ajustes y seguridad" width="220" height="440"/>
+      <img data-src="/assets/screenshots/notificacion.webp" alt="Reporte de inflación y depreciación" width="220" height="440"/>
       <div class="skeleton" aria-hidden="true"></div>
-      <p class="screen-label">Ajustes</p>
+      <p class="screen-label">Reportes</p>
     </figure>
-    -->
+
+    <figure class="screen-card">
+      <img data-src="/assets/screenshots/widgets.webp" alt="Widgets de escritorio" width="220" height="440"/>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="screen-label">Widgets</p>
+    </figure>
+
   </div>
 </section>
 
-<!-- ── FEATURES ── -->
 <div class="section-title">
   <h2>Diseñada para la realidad venezolana</h2>
   <p>Funciona sin internet, entiende el bolívar y protege tu información.</p>
@@ -471,14 +407,6 @@
 </footer>
 
 <script>
-  /* ════════════════════════════════════════════════
-     LAZY LOAD — Intersection Observer
-     Maneja:
-       1. Imágenes de screenshots (data-src → src)
-       2. Animación de entrada para .screen-card y .feat
-  ════════════════════════════════════════════════ */
-
-  // ── 1. Lazy load de imágenes ──
   const imgObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -488,17 +416,16 @@
 
       img.src = src;
       img.addEventListener('load',  () => img.classList.add('loaded'), { once: true });
-      img.addEventListener('error', () => img.classList.add('loaded'), { once: true }); // evita skeleton eterno
+      img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
       obs.unobserve(img);
     });
   }, {
-    rootMargin: '200px 0px', // pre-carga 200px antes de entrar al viewport
+    rootMargin: '200px 0px',
     threshold: 0
   });
 
   document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
 
-  // ── 2. Animación de entrada (reveal on scroll) ──
   const revealObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
