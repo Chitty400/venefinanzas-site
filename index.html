@@ -266,7 +266,7 @@
 
     /* ── FEATURES ── */
     .features {
-      max-width: 640px; margin: 0 auto;
+      max-width: 900px; margin: 0 auto;
       padding: 0 24px 80px;
       display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
     }
@@ -404,29 +404,59 @@
 
 <div class="section-title">
   <h2>Pensada para Venezuela</h2>
-  <p>Funciona sin internet y entiende nuestra economía.</p>
+  <p>Funciona sin internet y entiende nuestra economía. Sin registro, sin límites, sin costos ocultos.</p>
 </div>
 
 <section class="features">
   <div class="feat">
-    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
-    <h3>Privacy-First</h3>
-    <p>Sin registro. Tus datos nunca salen de tu dispositivo.</p>
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
+    <h3>Agenda</h3>
+    <p>Registra ingresos y gastos en VES, BCV, USD o USDT con tasas siempre actualizadas. Escanea facturas con la cámara (MLKit, 100% offline) y registra pagos por PagoMóvil directamente. Al seleccionar USD o USDT se activa el modo inversión/transacción para diferenciar compra-venta de divisas de gasto ordinario.</p>
   </div>
   <div class="feat">
-    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
-    <h3>Cifrado Militar</h3>
-    <p>Base de datos AES-256 cifrada con SQLCipher.</p>
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div>
+    <h3>Dashboard</h3>
+    <p>Tu vista principal. Consulta tasas BCV y Binance P2P en tiempo real, visualiza tu liquidez por divisa y sigue tus saldos en gráficas por Día, Semana o Mes. Accede al histórico de tasas BCV disponible offline tras la primera carga, y configura transacciones frecuentes para registrarlas con un solo toque.</p>
   </div>
   <div class="feat">
-    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
-    <h3>Cloud Backup</h3>
-    <p>Respaldo cifrado en tu propio Google Drive personal.</p>
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg></div>
+    <h3>Calculadora de Tasas</h3>
+    <p>Escribe un monto y obtén la conversión automática a BCV y USDT. Cambia la divisa de entrada con un toque, comparte el resultado por WhatsApp y registra la transacción directo a la Agenda. Guarda hasta 50 cálculos en el historial.</p>
   </div>
   <div class="feat">
     <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
     <h3>Escáner OCR</h3>
-    <p>Detecta montos en facturas SENIAT automáticamente.</p>
+    <p>Detecta montos en facturas SENIAT automáticamente con MLKit, 100% offline. Sin servidores, sin subir imágenes. El escaneo ocurre en tu dispositivo y registra el gasto directo en tu Agenda con un toque.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.23.1-.47.04-.66-.12a.58.58 0 0 1-.14-.17c-1.13-1.43-1.31-3.48-.55-5.12C5.78 10 4.87 12.3 5 14.47c.06.5.12 1 .29 1.5.14.6.41 1.2.71 1.73 1.08 1.73 2.95 2.97 4.96 3.22 2.14.27 4.43-.12 6.07-1.6 1.83-1.66 2.47-4.32 1.53-6.6l-.13-.21-.77-.31z"/></svg></div>
+    <h3>Ves Loss Tracker</h3>
+    <p>Algoritmo exclusivo que mide el efecto de la inflación sobre tu liquidez en divisas. Genera reportes semanales, mensuales y alertas automáticas cuando la inflación se dispara, todo vía notificaciones.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 5H1v16c0 1.1.9 2 2 2h16v-2H3V5zm18-4H7c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-5 10H8V9h8v2zm2-4H8V5h10v2z"/></svg></div>
+    <h3>3 Widgets para Android</h3>
+    <p>Visor de tasas moldeable, calculadora de tasas nativa en pantalla de inicio y velocímetro de diferencia P2P vs BCV. La app aprende tus hábitos y arranca desde la sección que más usas, con shortcuts desde el launcher.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+    <h3>Privacy-First</h3>
+    <p>Sin registro, sin cuenta, sin acceso a tus datos financieros. Solo recopilamos lo esencial para mantenimiento (Crashlytics). Analytics avanzado solo si tú lo activas. Tus datos nunca salen de tu dispositivo.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+    <h3>Cifrado Militar</h3>
+    <p>Base de datos AES-256 + PBKDF2 cifrada con SQLCipher y tu propia contraseña. Respaldo local por defecto, Google Drive opcional. Biometría y modo privacidad para ocultar saldos disponibles desde ajustes.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
+    <h3>Cloud Backup</h3>
+    <p>Respaldo cifrado en tu propio Google Drive personal. Tu información viaja encriptada y solo tú tienes la llave. Offline-first: todo funciona sin conexión y se sincroniza cuando estés listo.</p>
+  </div>
+  <div class="feat">
+    <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+    <h3>Filosofía Libre</h3>
+    <p>Offline-first y privacy-first. Todo lo disponible hoy será siempre gratuito, sin límite de transacciones y sin pedirte nada. El futuro modo PRO marcará una diferencia real sin recortar la experiencia gratuita.</p>
   </div>
 </section>
 
